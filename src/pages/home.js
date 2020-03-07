@@ -7,20 +7,32 @@ class Ecommerce extends Component {
     constructor() {
         super();
         this.state = {
-            itens: []
+            itens: [],
+            search: ''
         }
     }
     retImageOrNotFound(item) {
-        if (item != null && item != "") item = <img src={item} alt="imagem do produto"></img>        
+        if (item != null && item != "") item = <img src={item} alt="imagem do produto"></img>
         return item;
     }
+    //Atualizando o meu estado a cada letra digitada
+    updateSearch(event) {
+        this.setState({ search: event.target.value.substr(0, 20) });
+    }
     render() {
+        //criando o filtro
+        var DataFiltra = Data.products.filter(
+            (result) => {
+                return result.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+            }
+        );
         return (
             <div>
                 <h2>O melhor E-commerce para você</h2>
+                <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
                 <div className="container">
-                    {/* Mapeando o meu array products para exibir os produtos */}
-                    {Data.products.map((item, index) => {
+                    {/* Mapeando o meu array de products */}
+                    {DataFiltra.map((item, index) => {
                         return (
                             <div className="container-produtos" >
                                 <div className="image">
@@ -30,21 +42,20 @@ class Ecommerce extends Component {
                                     <div className="informacoes">
                                         <h3>{item.name}</h3>
                                         {/* <p>{item.style}</p>
-                                {/* <p>{item.code_color}</p>
-                                <p>{item.color_slug}</p> */}
+                                        <p>{item.code_color}</p>
+                                        <p>{item.color_slug}</p> */}
                                         <p>Cor {item.color}</p>
                                         <p>{item.on_sale}</p>
                                         <p>Preço regular {item.regular_price}</p>
                                         <p>Preço atual {item.actual_price}</p>
-                                        <p>Desconto de {item.discount_percentage}</p>
+                                        {item.discount_percentage != "" ? <p>Desconto de {item.discount_percentage}</p> : ""}
                                         <p>ou {item.installments}</p>
-                                        <p className="tamanhos">Tamanhos {item.sizes.map((size, index) => {
+                                        <p>Tamanho
+                                         <select> {item.sizes.map((size, index) => {
                                             return (
-                                                <div>
-                                                    <p style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#4346FF' : '#839693') }} className="size">{size.size}</p>
-                                                </div>
+                                                <option disabled={size.available == true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#4346FF' : '#839693') }} className="size">{size.size}</option>
                                             )
-                                        })}</p>
+                                        })}</select></p>
                                     </div>
                                     <div className="btn"><button>Adicionar ao Carrinho</button></div>
                                 </div>
