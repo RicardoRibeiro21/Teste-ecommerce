@@ -1,11 +1,12 @@
 * {
-    font-family: 'Helvetica';
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 h2 {
     font-family: 'Gabriola';
-    font-size: 2em;
+    font-size: 2.3em;
 }
+
 input[type=text] {
     padding: 12px;
     margin: 8px 0;
@@ -17,8 +18,8 @@ input[type=text] {
     border-bottom: 5px solid rgba(109, 95, 235, 0.5);
     width: 40%;
     align-content: center;
-    justify-content: center;    
-    height: 1.5em;    
+    justify-content: center;
+    height: 1.5em;
     margin-bottom: 5%;
 }
 
@@ -26,62 +27,72 @@ input[type=text] {
     font-size: 1.1em;
     color: rgb(5, 0, 78);
 }
+
 .container {
     display: grid;
-    justify-content: center;    
-    grid-template-columns: repeat(5, 200px);		
+    justify-content: center;
+    grid-template-columns: repeat(4, 230px);
     grid-auto-flow: row;
-    margin-bottom: 10%;
 }
+
 .container-produtos {
-    margin: 4%;    
-    border-radius: 12px;     
+    margin: 0 5%;
+    border-bottom: #EB2049 groove 1px;
 }
-.container-informacoes {
-    background-color: rgb(255, 228, 251);
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    height: 280px;   
+
+.container-produtos:hover {
+    opacity: 75%;
+}
+
+div {
+    outline: none;
 }
 
 .image {
-    width: 100%;         
-    height: 41%;    
-}
-.image img {
-    width: 80%;         
-}
-.informacoes { 
-    display: flex;
-    width: 90%;
-    justify-content: center;    
-    flex-direction: column;       
-    text-align: left;       
-    max-height: 214.5px;
-    margin-left: 5%;
-}
-.informacoes h3 {
-    font-size: 0.8em;
-    text-align: center;
-    height: 40px;    
-}
-.informacoes p {
-    display: flex;
-    font-size: 0.75em;  
-    margin-top: 0;  
-}
-.informacoes select {
-    margin-left: 5%;
-    overflow: hidden;
-    background-color:white;
-    border: none;
-}
- button {
-    margin: 5% 0 5% 0;    
-    border:none;
-    border-radius: 8px;
-    height: 2.2em;    
-    color: white;   
-    background-color: rgba(0, 223, 169, 0.7)    
+    width: 100%;
+    height: 45%;
 }
 
+.image img {
+    width: 80%;
+    margin-top: 15%;
+}
+
+.informacoes {
+    display: flex;
+    width: 100%;
+    height: 230px;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 5%;
+}
+
+.informacoes h3 {
+    font-size: 0.8em;
+    height: 15px;
+}
+
+.informacoes p {
+    font-size: 0.8em;
+}
+
+.informacoes strike {
+    font-size: 0.8em;
+}
+
+.descricao {
+    height: 210px;
+}
+
+.cor {
+    font-size: 0.7em !important;
+    height: 10px;
+}
+
+.preco {
+    font-size: 1.2em !important;
+    color: #EB2049;
+    margin-top: 0;
+    margin-bottom: -4%;
+}
