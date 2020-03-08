@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Data from '../data/db.json';
-import '../pages/home.css';
+import Data from '../../data/db.json';
+import '../home/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
-import indisponivel from '../assets/img/indisponivel.jpg';
+import indisponivel from '../../assets/img/indisponivel.jpg';
 
 let carrinho = [];
 let tamanhos = [];
@@ -47,6 +47,7 @@ class Ecommerce extends Component {
             produto: this.state.prodSelected,
             tamanho: tamanhoSelect
         }
+        localStorage.setItem(itemAdicionado, "itemAdicionado");
         carrinho.push(itemAdicionado);
         this.setState({ carState: carrinho })
         console.log(carrinho)
@@ -72,7 +73,7 @@ class Ecommerce extends Component {
         var value = select.options[select.selectedIndex].value;
         tamanhoSelect = value;
     }
-    
+
     render() {
         //Criando meu modal
         function MyVerticallyCenteredModal(props) {
@@ -121,6 +122,7 @@ class Ecommerce extends Component {
                 return result.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
             }
         );
+
         return (
             <div>
                 <h2>O melhor E-commerce para você</h2>

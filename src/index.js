@@ -3,8 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import Carrinho from './pages/carrinho/carrinho';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rotas =  (
+    <Router>
+        <div>
+            <Switch>
+            <Route exact path="/" component={App} />
+            <Route path="/Carrinho" component={Carrinho} />           
+            {/* <Route component={NaoEncontrada}/> */} 
+            </Switch>
+        </div>
+    </Router>
+)
+
+ReactDOM.render(rotas, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
