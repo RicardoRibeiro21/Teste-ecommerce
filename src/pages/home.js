@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Data from '../data/db.json';
 import '../pages/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import indisponivel from '../assets/img/indisponivel.jpg';
 
 let carrinho = [];
 let tamanhos = [];
@@ -18,15 +19,18 @@ class Ecommerce extends Component {
             prodSelected: []
         }
     }
-    //Funcão que verifica se minha
+    //Verifica se a imagem retorna nula e retorna uma img de feedback
     retImageOrNotFound(item) {
         if (item !== null && item !== "") item = <img src={item} alt="imagem do produto"></img>
+        else item = <img src={indisponivel}></img>
         return item;
     }
     //Atualizando o meu estado a cada letra digitada
     updateSearch(event) {
         this.setState({ search: event.target.value.substr(0, 20) });
     }
+
+    //Retorna o só o preco ou preco com promoção
     retPrecoDisponivel(onSale, preco, precoPromocao) {
         if (onSale === true) {
             return (
@@ -37,6 +41,7 @@ class Ecommerce extends Component {
             )
         } else return <p className="preco">Por {preco}</p>
     }
+
     //Função que adiciona os itens escolhidos ao carrinho.
     addToCar() {
         carrinho.push(this.state.prodSelected);
@@ -44,6 +49,7 @@ class Ecommerce extends Component {
         console.log(carrinho)
     }
 
+    //Responsável  por chamar o modal
     chamaModal(event, item, sizes) {
         this.setState({ modalShow: !this.state.modalShow });
         this.setState({ prodSelected: null });
@@ -58,9 +64,8 @@ class Ecommerce extends Component {
         // console.log(sizes);
     }
 
-
     render() {
-                
+        //Criando meu modal
         function MyVerticallyCenteredModal(props) {
             return (
                 <Modal
@@ -68,8 +73,6 @@ class Ecommerce extends Component {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-
-                // backdrop="static"
                 >
                     <Modal.Header closeButton style={{ heigth: '10px' }}>
                         <Modal.Title id="contained-modal-title-vcenter">
@@ -111,8 +114,10 @@ class Ecommerce extends Component {
         return (
             <div>
                 <h2>O melhor E-commerce para você</h2>
-                <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
-                <p>Carrinho ({this.state.carState.length > 0 ? this.state.carState.length : '0'})</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
+                    <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
+                    <p> Carrinho ({this.state.carState.length > 0 ? this.state.carState.length : '0'})</p>
+                </div>
                 <div className="container">
                     {/* Mapeando o meu array de products */}
                     {DataFiltra.map((item, index, data) => {
@@ -121,16 +126,18 @@ class Ecommerce extends Component {
                         }
                         else {
                             return (
-                                <div onClick={(event) => this.chamaModal(event, item, item.sizes)} className="container-produtos" >
-                                    <MyVerticallyCenteredModal
-                                        show={this.state.modalShow}
-                                        onHide={() => this.setState({ modalShow : true})}
-                                        prod={this.state.prodSelected}
-                                        car={this.state.carState}
-                                        add={(event) => this.addToCar(event, this.state.prodSelected)}
-                                    />
-                                    <div className="image">
-                                        {this.retImageOrNotFound(item.image)}
+                                <div className="container-produtos" >
+                                    <div onClick={(event) => this.chamaModal(event, item, item.sizes)} >
+                                        <MyVerticallyCenteredModal
+                                            show={this.state.modalShow}
+                                            onHide={() => this.setState({ modalShow: true })}
+                                            prod={this.state.prodSelected}
+                                            car={this.state.carState}
+                                            add={(event) => this.addToCar(event, this.state.prodSelected)}
+                                        />
+                                        <div className="image">
+                                            {this.retImageOrNotFound(item.image)}
+                                        </div>
                                     </div>
                                     <div className="container-informacoes">
                                         <div className="informacoes">
@@ -140,26 +147,17 @@ class Ecommerce extends Component {
                                                 {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
                                                 <p>ou {item.installments}</p>
                                                 <p style={{ height: '1px' }}>Tamanhos</p>
-                                                <select style={{ display: 'flex', flexDirection: 'rows' }}>
+                                                <select className="dropdown">
                                                     {item.sizes.map((size, index) => {
                                                         return (
-                                                            <option style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
+                                                            <option disabled={size.available === true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
                                                         )
                                                     })}
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <ButtonToolbar>
-                                        <Button variant="primary" onClick={() => setModalShow(true)}>
-                                            Launch vertically centered modal
-                                     </Button>
 
-                                        <MyVerticallyCenteredModal
-                                            show={this.state.modalShow}
-                                            onHide={() => setModalShow(false)}
-                                        />
-                                    </ButtonToolbar> */}
                                 </div>
                             )
                         }
