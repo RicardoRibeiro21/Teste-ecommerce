@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Data from '../data/db.json';
 import '../pages/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
 
 let carrinho = [];
 let tamanhos = [];
@@ -14,12 +14,13 @@ class Ecommerce extends Component {
             search: '',
             carState: [],
             modalShow: false,
+            setModalShow: true,
             prodSelected: []
         }
     }
     //Funcão que verifica se minha
     retImageOrNotFound(item) {
-        if (item != null && item != "") item = <img src={item} alt="imagem do produto"></img>
+        if (item !== null && item !== "") item = <img src={item} alt="imagem do produto"></img>
         return item;
     }
     //Atualizando o meu estado a cada letra digitada
@@ -27,7 +28,7 @@ class Ecommerce extends Component {
         this.setState({ search: event.target.value.substr(0, 20) });
     }
     retPrecoDisponivel(onSale, preco, precoPromocao) {
-        if (onSale == true) {
+        if (onSale === true) {
             return (
                 <div>
                     <strike style={{ fontSize: '0.8em' }}>De {preco}</strike>
@@ -43,20 +44,23 @@ class Ecommerce extends Component {
         console.log(carrinho)
     }
 
-    chamaModal(item) {
+    chamaModal(event, item, sizes) {
         this.setState({ modalShow: !this.state.modalShow });
         this.setState({ prodSelected: null });
         this.setState({ prodSelected: item });
-        //Esvaziando o vetor caso tenha valores
+        //Esvaziando vetor
         tamanhos = [];
-        item.sizes.map((size) => {
-            tamanhos.push(size.size)
+        sizes.map((size) => {
+
+            tamanhos.push()
         })
+        console.log(item)
+        // console.log(sizes);
     }
 
 
     render() {
-        //Função do meu Modal
+                
         function MyVerticallyCenteredModal(props) {
             return (
                 <Modal
@@ -64,6 +68,8 @@ class Ecommerce extends Component {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
+
+                // backdrop="static"
                 >
                     <Modal.Header closeButton style={{ heigth: '10px' }}>
                         <Modal.Title id="contained-modal-title-vcenter">
@@ -75,14 +81,14 @@ class Ecommerce extends Component {
                             <img style={{ width: '30%' }} src={props.prod.image}></img>
                             <div style={{ width: '50%' }}>
                                 <p>Cor {props.prod.color}</p>
-                                <select>Tamanho {tamanhos.map((tamanho) => {
+                                {/* <select>Tamanho {tamanhos.map((tamanho) => {
                                     return (
                                         <option>{tamanho.size}</option>
                                     )
-                                })}</select>
+                                })}</select> */}
                                 <p>Preço: {props.prod.actual_price}</p>
                                 <p>ou {props.prod.installments}</p>
-                                {props.prod.discount_percentage != '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
+                                {props.prod.discount_percentage !== '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
                             </div>
                             <p>Carrinho ({props.car.length})</p>
                         </div>
@@ -110,19 +116,20 @@ class Ecommerce extends Component {
                 <div className="container">
                     {/* Mapeando o meu array de products */}
                     {DataFiltra.map((item, index, data) => {
-                        if (data.length == 0) {
+                        if (data.length === 0) {
                             return <h3>Nenhum produto encontrado...</h3>
                         }
                         else {
                             return (
-                                <div className="container-produtos" >
+                                <div onClick={(event) => this.chamaModal(event, item, item.sizes)} className="container-produtos" >
                                     <MyVerticallyCenteredModal
                                         show={this.state.modalShow}
+                                        onHide={() => this.setState({ modalShow : true})}
                                         prod={this.state.prodSelected}
                                         car={this.state.carState}
                                         add={(event) => this.addToCar(event, this.state.prodSelected)}
                                     />
-                                    <div  className="image">
+                                    <div className="image">
                                         {this.retImageOrNotFound(item.image)}
                                     </div>
                                     <div className="container-informacoes">
@@ -136,13 +143,23 @@ class Ecommerce extends Component {
                                                 <select style={{ display: 'flex', flexDirection: 'rows' }}>
                                                     {item.sizes.map((size, index) => {
                                                         return (
-                                                            <option style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
+                                                            <option style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
                                                         )
                                                     })}
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                    {/* <ButtonToolbar>
+                                        <Button variant="primary" onClick={() => setModalShow(true)}>
+                                            Launch vertically centered modal
+                                     </Button>
+
+                                        <MyVerticallyCenteredModal
+                                            show={this.state.modalShow}
+                                            onHide={() => setModalShow(false)}
+                                        />
+                                    </ButtonToolbar> */}
                                 </div>
                             )
                         }
