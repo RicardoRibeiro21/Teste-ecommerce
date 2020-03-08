@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import Data from '../data/db.json';
 import '../pages/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button, ButtonToolbar } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap';
 
 let carrinho = [];
-let itemSelected = [];
-let produtos = [];
+let tamanhos = [];
 class Ecommerce extends Component {
     constructor() {
         super();
@@ -15,7 +14,7 @@ class Ecommerce extends Component {
             search: '',
             carState: [],
             modalShow: false,
-            prodSelected: ''
+            prodSelected: []
         }
     }
     //Funcão que verifica se minha
@@ -48,8 +47,11 @@ class Ecommerce extends Component {
         this.setState({ modalShow: !this.state.modalShow });
         this.setState({ prodSelected: null });
         this.setState({ prodSelected: item });
-        itemSelected.push(item);
-        console.log(itemSelected);
+        //Esvaziando o vetor caso tenha valores
+        tamanhos = [];
+        item.sizes.map((size) => {
+            tamanhos.push(size.size)
+        })
     }
 
 
@@ -63,23 +65,28 @@ class Ecommerce extends Component {
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton style={{ heigth: '10px' }}>
                         <Modal.Title id="contained-modal-title-vcenter">
                             <p>{props.prod.name}</p>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <img style={{ width: '20%' }} src={props.prod.image}></img>
-                        <p>{props.prod.color}</p>
-                        <p>{props.prod.actual_price}</p>
-                        <p>{props.prod.size}</p>
-                        <p>{props.car.length}</p>
-                        {/* <select> {this.props.prod.sizes.map((size) => {
-                            return (
-                                <option disabled={size.available == true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#4346FF' : '#839693') }} className="size">{size.size}</option>
-                            )
-                        })}</select> */}
-                        {console.log(props.prod.name)}
+                        <div style={{ display: 'flex' }}>
+                            <img style={{ width: '30%' }} src={props.prod.image}></img>
+                            <div style={{ width: '50%' }}>
+                                <p>Cor {props.prod.color}</p>
+                                <select>Tamanho {tamanhos.map((tamanho) => {
+                                    return (
+                                        <option>{tamanho.size}</option>
+                                    )
+                                })}</select>
+                                <p>Preço: {props.prod.actual_price}</p>
+                                <p>ou {props.prod.installments}</p>
+                                {props.prod.discount_percentage != '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
+                            </div>
+                            <p>Carrinho ({props.car.length})</p>
+                        </div>
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={props.onHide}>Fechar</Button>
@@ -97,29 +104,27 @@ class Ecommerce extends Component {
         );
         return (
             <div>
-
                 <h2>O melhor E-commerce para você</h2>
                 <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
                 <p>Carrinho ({this.state.carState.length > 0 ? this.state.carState.length : '0'})</p>
                 <div className="container">
                     {/* Mapeando o meu array de products */}
                     {DataFiltra.map((item, index, data) => {
-                        produtos.push(item)
                         if (data.length == 0) {
                             return <h3>Nenhum produto encontrado...</h3>
                         }
                         else {
                             return (
-                                <div onClick={() => { this.chamaModal(item) }} className="container-produtos" tabIndex="0">
-                                    <div className="image">
-                                        {this.retImageOrNotFound(item.image)}
-                                    </div>
+                                <div className="container-produtos" >
                                     <MyVerticallyCenteredModal
                                         show={this.state.modalShow}
                                         prod={this.state.prodSelected}
                                         car={this.state.carState}
                                         add={(event) => this.addToCar(event, this.state.prodSelected)}
                                     />
+                                    <div  className="image">
+                                        {this.retImageOrNotFound(item.image)}
+                                    </div>
                                     <div className="container-informacoes">
                                         <div className="informacoes">
                                             <h3>{item.name}</h3>
@@ -128,13 +133,13 @@ class Ecommerce extends Component {
                                                 {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
                                                 <p>ou {item.installments}</p>
                                                 <p style={{ height: '1px' }}>Tamanhos</p>
-                                                <p style={{ display: 'flex', flexDirection: 'rows' }}>
+                                                <select style={{ display: 'flex', flexDirection: 'rows' }}>
                                                     {item.sizes.map((size, index) => {
                                                         return (
-                                                            <p style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</p>
+                                                            <option style={{ fontSize: '1em', marginLeft: '2px', color: (size.available == true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
                                                         )
                                                     })}
-                                                </p>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
