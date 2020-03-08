@@ -7,6 +7,7 @@ import indisponivel from '../assets/img/indisponivel.jpg';
 
 let carrinho = [];
 let tamanhos = [];
+let tamanhoSelect = null;
 class Ecommerce extends Component {
     constructor() {
         super();
@@ -16,7 +17,7 @@ class Ecommerce extends Component {
             carState: [],
             modalShow: false,
             setModalShow: true,
-            prodSelected: []
+            prodSelected: [],
         }
     }
     //Verifica se a imagem retorna nula e retorna uma img de feedback
@@ -29,7 +30,6 @@ class Ecommerce extends Component {
     updateSearch(event) {
         this.setState({ search: event.target.value.substr(0, 20) });
     }
-
     //Retorna o só o preco ou preco com promoção
     retPrecoDisponivel(onSale, preco, precoPromocao) {
         if (onSale === true) {
@@ -41,16 +41,19 @@ class Ecommerce extends Component {
             )
         } else return <p className="preco">Por {preco}</p>
     }
-
     //Função que adiciona os itens escolhidos ao carrinho.
     addToCar() {
-        carrinho.push(this.state.prodSelected);
+        let itemAdicionado = {
+            produto: this.state.prodSelected,
+            tamanho: tamanhoSelect
+        }
+        carrinho.push(itemAdicionado);
         this.setState({ carState: carrinho })
         console.log(carrinho)
     }
-
     //Responsável  por chamar o modal
-    chamaModal(event, item, sizes) {
+    chamaModal(event, item, sizes, index) {
+        this.valorSelectSize(index);
         this.setState({ modalShow: !this.state.modalShow });
         this.setState({ prodSelected: null });
         this.setState({ prodSelected: item });
@@ -63,7 +66,13 @@ class Ecommerce extends Component {
         console.log(item)
         // console.log(sizes);
     }
-
+    //Pego o valor do tamanho selecionado
+    valorSelectSize(index) {
+        var select = document.getElementById('selectedSize' + index);
+        var value = select.options[select.selectedIndex].value;
+        tamanhoSelect = value;
+    }
+    
     render() {
         //Criando meu modal
         function MyVerticallyCenteredModal(props) {
@@ -74,7 +83,7 @@ class Ecommerce extends Component {
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
-                    <Modal.Header closeButton style={{ heigth: '10px' }}>
+                    <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
                             <p>{props.prod.name}</p>
                         </Modal.Title>
@@ -92,6 +101,7 @@ class Ecommerce extends Component {
                                 <p>Preço: {props.prod.actual_price}</p>
                                 <p>ou {props.prod.installments}</p>
                                 {props.prod.discount_percentage !== '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
+                                <p>Tamanho {tamanhoSelect}</p>
                             </div>
                             <p>Carrinho ({props.car.length})</p>
                         </div>
@@ -127,7 +137,7 @@ class Ecommerce extends Component {
                         else {
                             return (
                                 <div className="container-produtos" >
-                                    <div onClick={(event) => this.chamaModal(event, item, item.sizes)} >
+                                    <div onClick={(event) => this.chamaModal(event, item, item.sizes, index)} >
                                         <MyVerticallyCenteredModal
                                             show={this.state.modalShow}
                                             onHide={() => this.setState({ modalShow: true })}
@@ -147,7 +157,7 @@ class Ecommerce extends Component {
                                                 {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
                                                 <p>ou {item.installments}</p>
                                                 <p style={{ height: '1px' }}>Tamanhos</p>
-                                                <select className="dropdown">
+                                                <select id={`selectedSize${index}`} onChange={(event) => this.chamaModal(event, item, item.sizes, index)} className="dropdown">
                                                     {item.sizes.map((size, index) => {
                                                         return (
                                                             <option disabled={size.available === true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
@@ -157,7 +167,6 @@ class Ecommerce extends Component {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             )
                         }

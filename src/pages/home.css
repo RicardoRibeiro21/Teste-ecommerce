@@ -109,3 +109,15 @@ div {
     color: #474747;
     text-align: left
 }
+
+@media screen and (max-width: 1160px) {
+    .container {
+        grid-template-columns: repeat(3, 230px);
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .container {
+        grid-template-columns: repeat(2, 230px);
+    }
+}
