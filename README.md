@@ -1,5 +1,6 @@
 # Teste-ecommerce
-Teste referente Ã  empresa Confere CartÃµes
+
+Intruções para baixar, executar e testar o projeto.
 
 Baixando o projeto:
 
