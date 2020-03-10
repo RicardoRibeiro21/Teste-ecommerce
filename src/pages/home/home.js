@@ -104,7 +104,7 @@ class Ecommerce extends Component {
                                 {props.prod.discount_percentage !== '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
                                 <p>Tamanho {tamanhoSelect}</p>
                             </div>
-                            <p>Carrinho ({props.car.length})</p>
+                            <a href="/Carrinho">Carrinho ({props.car.length}) </a>
                         </div>
 
                     </Modal.Body>
