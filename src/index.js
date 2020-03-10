@@ -5,12 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Carrinho from './pages/carrinho/carrinho';
+import Ecommerce from './pages/home/home';
 
 const rotas =  (
     <Router>
         <div>
             <Switch>
             <Route exact path="/" component={App} />
+            <Route path="/Home" component={Ecommerce} />           
             <Route path="/Carrinho" component={Carrinho} />           
             {/* <Route component={NaoEncontrada}/> */} 
             </Switch>

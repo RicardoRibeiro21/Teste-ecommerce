@@ -5,8 +5,8 @@ import Ecommerce from './pages/home/home';
 
 function App() {
   return (
-    <div className="App">
-      <Ecommerce />
+    <div className="App">      
+      
     </div>
   );
 }

@@ -12,7 +12,6 @@ class Ecommerce extends Component {
     constructor() {
         super();
         this.state = {
-            itens: [],
             search: '',
             carState: [],
             modalShow: false,
@@ -42,15 +41,16 @@ class Ecommerce extends Component {
         } else return <p className="preco">Por {preco}</p>
     }
     //Função que adiciona os itens escolhidos ao carrinho.
-    addToCar() {
+    addToCar(event, produto) {
         let itemAdicionado = {
-            produto: this.state.prodSelected,
+            produto: produto,
             tamanho: tamanhoSelect
         }
-        localStorage.setItem(itemAdicionado, "itemAdicionado");
         carrinho.push(itemAdicionado);
-        this.setState({ carState: carrinho })
-        console.log(carrinho)
+        this.setState({ carState: carrinho });
+        console.log(carrinho);
+        localStorage.setItem("Itens", JSON.stringify(carrinho));
+        console.log(localStorage.getItem('Item'));
     }
     //Responsável  por chamar o modal
     chamaModal(event, item, sizes, index) {
@@ -128,7 +128,7 @@ class Ecommerce extends Component {
                 <h2>O melhor E-commerce para você</h2>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
                     <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
-                    <p> Carrinho ({this.state.carState.length > 0 ? this.state.carState.length : '0'})</p>
+                    <p> Carrinho ({this.state.carState.length})</p>
                 </div>
                 <div className="container">
                     {/* Mapeando o meu array de products */}
