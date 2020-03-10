@@ -19,6 +19,12 @@ class Ecommerce extends Component {
             prodSelected: [],
         }
     }
+    componentDidMount(){
+        //Carregando os itens do carrinho
+        var a = localStorage.getItem("Itens").Value
+        console.log(a)
+        
+    }
     //Verifica se a imagem retorna nula e retorna uma img de feedback
     retImageOrNotFound(item) {
         if (item !== null && item !== "") item = <img src={item} alt="imagem do produto"></img>
