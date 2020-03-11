@@ -69,6 +69,7 @@ class Carrinho extends Component {
                     {
                         this.getCar()
                     }
+                    <button className="return"><a href="/home">Voltar as compras</a></button>
                 </div>
             </div>
         )

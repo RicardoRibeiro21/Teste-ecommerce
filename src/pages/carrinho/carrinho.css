@@ -1,3 +1,8 @@
+.container-carrinho {
+    width: 100vw;
+    height: auto;
+}
+
 .carrinho-itens {
     display: flex;
     flex-direction: row;
@@ -14,8 +19,7 @@
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.842);
     color: white;
-    height: 60px;    
-    margin-top: 0;
+    height: 60px;        
 }
 
 .qtd-carrinho {
@@ -33,4 +37,36 @@
 
 .carrinho-itens h3 {
     font-size: 1.3em;    
+}
+.return {
+    position: fixed;
+    margin-left: 42%; 
+    top: 90%;      
+}
+.return a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.8s linear;
+}
+.return a:hover {
+    color: black;
+}
+.return {
+    width: 15%;
+    height: 5%;
+    border: none;
+    border-radius: 8px;        
+    background-color: rgb(0, 223, 167)
+}
+
+@media screen and (max-width: 1160px) { 
+    .return {
+        width: 20%;
+    }    
+}
+
+@media screen and (max-width: 860px) {
+    .return {
+        width: 22%;
+    }    
 }
