@@ -4,7 +4,7 @@
 
 h2 {
     font-family: 'Gabriola';
-    font-size: 2.3em;        
+    font-size: 2.3em;
 }
 
 input[type=text] {
@@ -23,6 +23,10 @@ input[type=text] {
 .divBusca p {
     font-size: 1.1em;
     color: rgb(5, 0, 78);
+}
+
+a {
+    text-decoration: dashed;
 }
 
 .container {

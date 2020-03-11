@@ -4,6 +4,7 @@ import '../home/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 import indisponivel from '../../assets/img/indisponivel.jpg';
+import Carrinho from '../carrinho/carrinho';
 
 let carrinho = [];
 let tamanhos = [];
@@ -17,6 +18,7 @@ class Ecommerce extends Component {
             modalShow: false,
             setModalShow: true,
             prodSelected: [],
+            showCar: false
         }
     }
     componentDidMount() {
@@ -79,6 +81,9 @@ class Ecommerce extends Component {
         var value = select.options[select.selectedIndex].value;
         tamanhoSelect = value;
     }
+    showCarrinho() {
+        this.setState({ showCar: true })
+    }
 
     render() {
         //Criando meu modal
@@ -110,7 +115,7 @@ class Ecommerce extends Component {
                                 {props.prod.discount_percentage !== '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
                                 <p>Tamanho {tamanhoSelect}</p>
                             </div>
-                            <a href="/Carrinho">Carrinho ({props.car.length}) </a>
+                            <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({props.car.length}) </a>
                         </div>
 
                     </Modal.Body>
@@ -128,61 +133,65 @@ class Ecommerce extends Component {
                 return result.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
             }
         );
-
-        return (
-            <div>
-                <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
-                    <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
-                </div>
-                <p style={{ textAlign: 'center' }}> <a href="/Carrinho">Carrinho ({this.state.carState.length})</a></p>
-                <div className="container">
-                    {/* Mapeando o meu array de products */}
-                    {DataFiltra.map((item, index, data) => {
-                        if (data.length === 0) {
-                            return <h3>Nenhum produto encontrado...</h3>
-                        }
-                        else {
-                            return (
-                                <div className="container-produtos" >
-                                    <div onClick={(event) => this.chamaModal(event, item, item.sizes, index)} >
-                                        <MyVerticallyCenteredModal
-                                            show={this.state.modalShow}
-                                            onHide={() => this.setState({ modalShow: true })}
-                                            prod={this.state.prodSelected}
-                                            car={this.state.carState}
-                                            add={(event) => this.addToCar(event, this.state.prodSelected)}
-                                        />
-                                        <div className="image">
-                                            {this.retImageOrNotFound(item.image)}
+        if (this.state.showCar == false) {
+            return (
+                <div>
+                    <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
+                        <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
+                    </div>
+                    <p style={{ textAlign: 'center' }}> <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({this.state.carState.length})</a></p>
+                    <div className="container">
+                        {/* Mapeando o meu array de products */}
+                        {DataFiltra.map((item, index, data) => {
+                            if (data.length === 0) {
+                                return <h3>Nenhum produto encontrado...</h3>
+                            }
+                            else {
+                                return (
+                                    <div className="container-produtos" >
+                                        <div onClick={(event) => this.chamaModal(event, item, item.sizes, index)} >
+                                            <MyVerticallyCenteredModal
+                                                show={this.state.modalShow}
+                                                onHide={() => this.setState({ modalShow: true })}
+                                                prod={this.state.prodSelected}
+                                                car={this.state.carState}
+                                                add={(event) => this.addToCar(event, this.state.prodSelected)}
+                                            />
+                                            <div className="image">
+                                                {this.retImageOrNotFound(item.image)}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="container-informacoes">
-                                        <div className="informacoes">
-                                            <h3 style={{ marginTop: '6%' }}>{item.name}</h3>
-                                            <p className="cor">{item.color}</p>
-                                            <div className="descricao">
-                                                {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
-                                                <p>ou {item.installments}</p>
-                                                <p style={{ height: '1px' }}>Tamanhos</p>
-                                                <select id={`selectedSize${index}`} onChange={(event) => this.chamaModal(event, item, item.sizes, index)} className="dropdown">
-                                                    {item.sizes.map((size, index) => {
-                                                        return (
-                                                            <option disabled={size.available === true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
-                                                        )
-                                                    })}
-                                                </select>
+                                        <div className="container-informacoes">
+                                            <div className="informacoes">
+                                                <h3 style={{ marginTop: '6%' }}>{item.name}</h3>
+                                                <p className="cor">{item.color}</p>
+                                                <div className="descricao">
+                                                    {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
+                                                    <p>ou {item.installments}</p>
+                                                    <p style={{ height: '1px' }}>Tamanhos</p>
+                                                    <select id={`selectedSize${index}`} onChange={(event) => this.chamaModal(event, item, item.sizes, index)} className="dropdown">
+                                                        {item.sizes.map((size, index) => {
+                                                            return (
+                                                                <option disabled={size.available === true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
+                                )
+                            }
                         }
-                    }
-                    )}
+                        )}
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
+        else {
+            return <Carrinho />
+        }
     }
 }
 
