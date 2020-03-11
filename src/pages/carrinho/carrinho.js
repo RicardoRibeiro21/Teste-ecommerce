@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../home/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import indisponivel from '../../assets/img/indisponivel.jpg';
-import Data from '../../data/db.json'
+import '../carrinho/carrinho.css'
 
 class Carrinho extends Component {
     constructor() {
@@ -23,18 +23,18 @@ class Carrinho extends Component {
             return (
                 <div>
                     <strike>De {preco}</strike>
-                    <p >Por {precoPromocao} </p>
+                    <p className="preco">Por {precoPromocao} </p>
                 </div>
             )
-        } else return <p >Por {preco}</p>
+        } else return <p className="preco">Por {preco}</p>
     }
 
     getCar() {
         this.state.itens = JSON.parse(localStorage.getItem("Itens"));
         return this.state.itens.map((item) => {
             return (
-                <div >
-                    <div className="image">
+                <div className="carrinho-itens">
+                    <div className="carrinho-itens-image">
                         {this.retImageOrNotFound(item.produto.image)}
                     </div>
                     <div >
@@ -43,12 +43,11 @@ class Carrinho extends Component {
                             <p >{item.produto.color}</p>
                             <div>
                                 {this.retPrecoDisponivel(item.produto.on_sale, item.produto.regular_price, item.produto.actual_price, item.produto.discount_percentage)}
-                                <p>ou {item.produto.installments}</p>
+                                <p >ou {item.produto.installments}</p>
                                 <p>Tamanho {item.tamanho}</p>
                             </div>
                         </div>
                     </div>
-                    <p>{item.produto.name}</p>
                 </div>
             )
         })
@@ -63,11 +62,14 @@ class Carrinho extends Component {
 
     render() {
         return (
-            <div style={{ height: '449px', width: '444px' }} >
-                <h2>O melhor E-commerce para você</h2>
-                {
-                    this.getCar()
-                }
+            <div className="container-carrinho">
+                <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
+                <div>
+                    <p className="qtd-carrinho"> Carrinho ({this.state.itens == null ? '0' : this.state.itens.length})</p>
+                    {
+                        this.getCar()
+                    }
+                </div>
             </div>
         )
     }

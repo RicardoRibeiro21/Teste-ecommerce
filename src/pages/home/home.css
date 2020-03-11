@@ -4,9 +4,7 @@
 
 h2 {
     font-family: 'Gabriola';
-    font-size: 2.3em;
-    text-align: center;
-    margin-top: 4% !important;
+    font-size: 2.3em;        
 }
 
 input[type=text] {
@@ -18,9 +16,8 @@ input[type=text] {
     border-radius: 14px;
     border: none;
     border-bottom: 5px solid rgba(109, 95, 235, 0.5);
-    width: 500px;    
+    width: 500px;
     height: 1.5em;
-    margin-left: 20%;
 }
 
 .divBusca p {
@@ -37,7 +34,7 @@ input[type=text] {
 
 .container-produtos {
     margin: 0 5%;
-    border-bottom: #EB2049 groove 1px;
+    border-bottom: #EB2049 groove 2px;
 }
 
 .container-produtos:hover {
@@ -61,7 +58,7 @@ div {
 .informacoes {
     display: flex;
     width: 100%;
-    height: 200px;
+    height: 220px;
     justify-content: center;
     flex-direction: column;
     text-align: left;
@@ -93,8 +90,8 @@ div {
 .preco {
     font-size: 1.2em !important;
     color: #EB2049;
-    margin-top: 0;
-    margin-bottom: -4%;
+    margin-bottom: -1%;
+    font-weight: bold;
 }
 
 .dropdown {

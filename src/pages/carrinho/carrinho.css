@@ -1,0 +1,36 @@
+.carrinho-itens {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 3%;
+    border-bottom: rgba(235, 32, 73, 0.747) groove 2px;
+}
+
+.titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.842);
+    color: white;
+    height: 60px;    
+    margin-top: 0;
+}
+
+.qtd-carrinho {
+    text-align: right;
+}
+
+.carrinho-itens-image {
+    width: 40%;
+}
+
+.carrinho-itens-image img {
+    width: 50%;
+    margin-bottom: 5%;
+}
+
+.carrinho-itens h3 {
+    font-size: 1.3em;    
+}

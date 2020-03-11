@@ -19,11 +19,11 @@ class Ecommerce extends Component {
             prodSelected: [],
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         //Carregando os itens do carrinho
         var a = localStorage.getItem("Itens").Value
         console.log(a)
-        
+
     }
     //Verifica se a imagem retorna nula e retorna uma img de feedback
     retImageOrNotFound(item) {
@@ -131,11 +131,11 @@ class Ecommerce extends Component {
 
         return (
             <div>
-                <h2>O melhor E-commerce para você</h2>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
+                <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
                     <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
-                    <p> Carrinho ({this.state.carState.length})</p>
                 </div>
+                <p style={{ textAlign: 'center' }}> <a href="/Carrinho">Carrinho ({this.state.carState.length})</a></p>
                 <div className="container">
                     {/* Mapeando o meu array de products */}
                     {DataFiltra.map((item, index, data) => {
@@ -159,7 +159,7 @@ class Ecommerce extends Component {
                                     </div>
                                     <div className="container-informacoes">
                                         <div className="informacoes">
-                                            <h3>{item.name}</h3>
+                                            <h3 style={{ marginTop: '6%' }}>{item.name}</h3>
                                             <p className="cor">{item.color}</p>
                                             <div className="descricao">
                                                 {this.retPrecoDisponivel(item.on_sale, item.regular_price, item.actual_price, item.discount_percentage)}
