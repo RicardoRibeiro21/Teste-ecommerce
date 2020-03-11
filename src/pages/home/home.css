@@ -12,21 +12,24 @@ input[type=text] {
     margin: 8px 0;
 }
 
+.busca {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    margin-top: 2%;
+}
+.busca a {
+    margin-left: 15%;    
+}
 #txtBusca {
     border-radius: 14px;
     border: none;
     border-bottom: 5px solid rgba(109, 95, 235, 0.5);
-    width: 500px;
+    width: 400px;    
+    outline: none;
     height: 1.5em;
-}
-
-.divBusca p {
-    font-size: 1.1em;
-    color: rgb(5, 0, 78);
-}
-
-a {
-    text-decoration: dashed;
 }
 
 .container {

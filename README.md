@@ -21,6 +21,7 @@ O projeto além das dependências originais do npm, possuí outras necessárias para
 	npm install react-bootstrap bootstrap
 	npm install jquery popper.js
 	npm install react-router-dom
+	npm install react-loading
 
 Com todas as dependências incluídas no projeto, podemos rodar o projeto para testá-lo. Utilize o cmd com o seguinte comando:
 	

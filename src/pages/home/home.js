@@ -137,10 +137,10 @@ class Ecommerce extends Component {
             return (
                 <div>
                     <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: '2%', marginBottom: '2%' }}>
+                    <div className="busca">
                         <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
+                        <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({this.state.carState.length})</a>
                     </div>
-                    <p style={{ textAlign: 'center' }}> <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({this.state.carState.length})</a></p>
                     <div className="container">
                         {/* Mapeando o meu array de products */}
                         {DataFiltra.map((item, index, data) => {
