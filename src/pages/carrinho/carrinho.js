@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import indisponivel from '../../assets/img/indisponivel.jpg';
 import '../carrinho/carrinho.css'
 
+let preco = 0;
 class Carrinho extends Component {
     constructor() {
         super();
@@ -15,6 +16,7 @@ class Carrinho extends Component {
     componentWillMount() {
         //Pegando os itens armazenados no carrinho        
         this.state.itens = JSON.parse(localStorage.getItem("Itens"))
+        console.log(this.state.itens);
     }
 
     //Retorna o só o preco ou preco com promoção
@@ -69,7 +71,7 @@ class Carrinho extends Component {
                     {
                         this.getCar()
                     }
-                    <button className="return"><a href="/home">Voltar as compras</a></button>
+                    <button className="button"><a href="/home">Voltar as compras</a></button>
                 </div>
             </div>
         )

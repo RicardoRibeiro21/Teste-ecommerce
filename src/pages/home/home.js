@@ -23,9 +23,13 @@ class Ecommerce extends Component {
     }
     componentDidMount() {
         //Carregando os itens do carrinho
-        var a = localStorage.getItem("Itens").Value
-        console.log(a)
-
+        let vetor = JSON.parse(localStorage.getItem("Itens"));
+        this.setState({ carState: vetor })
+        if (vetor !== null) {
+            for (let i = 0; i < vetor.length; i++) {
+                carrinho.push(vetor[i]);
+            }
+        }
     }
     //Verifica se a imagem retorna nula e retorna uma img de feedback
     retImageOrNotFound(item) {
@@ -56,7 +60,6 @@ class Ecommerce extends Component {
         }
         carrinho.push(itemAdicionado);
         this.setState({ carState: carrinho });
-        console.log(carrinho);
         localStorage.setItem("Itens", JSON.stringify(carrinho));
         console.log(localStorage.getItem('Item'));
     }
@@ -115,9 +118,8 @@ class Ecommerce extends Component {
                                 {props.prod.discount_percentage !== '' ? <p>Desconto de {props.prod.discount_percentage}</p> : ""}
                                 <p>Tamanho {tamanhoSelect}</p>
                             </div>
-                            <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({props.car.length}) </a>
+                            <p>Carrinho ({props.car === null ? 0 : props.car.length}) </p>
                         </div>
-
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={props.onHide}>Fechar</Button>
@@ -139,18 +141,19 @@ class Ecommerce extends Component {
                     <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>
                     <div className="busca">
                         <input type="text" id="txtBusca" value={this.state.search} onChange={this.updateSearch.bind(this)} placeholder="Pesquisar produtos..." />
-                        <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({this.state.carState.length})</a>
+                        <a onClick={(event) => this.showCarrinho(event)}>Carrinho ({this.state.carState === null ? 0 : this.state.carState.length})</a>
                     </div>
                     <div className="container">
                         {/* Mapeando o meu array de products */}
                         {DataFiltra.map((item, index, data) => {
-                            if (data.length === 0) {
+                            if (item.index == 0) {
                                 return <h3>Nenhum produto encontrado...</h3>
                             }
                             else {
                                 return (
                                     <div className="container-produtos" >
                                         <div onClick={(event) => this.chamaModal(event, item, item.sizes, index)} >
+                                            {/* Chamando meu modal e passando as props */}
                                             <MyVerticallyCenteredModal
                                                 show={this.state.modalShow}
                                                 onHide={() => this.setState({ modalShow: true })}
@@ -171,6 +174,7 @@ class Ecommerce extends Component {
                                                     <p>ou {item.installments}</p>
                                                     <p style={{ height: '1px' }}>Tamanhos</p>
                                                     <select id={`selectedSize${index}`} onChange={(event) => this.chamaModal(event, item, item.sizes, index)} className="dropdown">
+                                                        {/* Mapeando o vetor de tamanhos de cada produto */}
                                                         {item.sizes.map((size, index) => {
                                                             return (
                                                                 <option disabled={size.available === true ? false : true} style={{ fontSize: '1em', marginLeft: '2px', color: (size.available === true ? '#5A5FE8' : '#839693') }} className="size">{size.size}</option>

@@ -22,9 +22,6 @@ input[type=text] {
     margin-top: 2%;
 }
 
-.busca a {
-    margin-left: 15%;
-}
 
 #txtBusca {
     border-radius: 14px;
@@ -33,6 +30,23 @@ input[type=text] {
     width: 400px;
     outline: none;
     height: 1.5em;
+}
+.busca a {
+    text-decoration: none;    
+    color: white !important;    
+    text-align: center;
+    transition: color 0.8s linear;
+    width: 10%;    
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(0, 223, 167);
+    margin-left: 15%;
+    cursor: pointer;
+}
+
+.busca a:hover {
+    color: rgba(206, 0, 0, 0.822) !important;
+    pointer-events: fill;
 }
 
 .container {
@@ -121,11 +135,25 @@ div {
 @media screen and (max-width: 1160px) {
     .container {
         grid-template-columns: repeat(3, 230px);
+        
+    }
+    #txtBusca {
+        width: 280px;
+    }
+    .busca {
+        width: 100%;
+        font-size: 0.9em;        
     }
 }
 
 @media screen and (max-width: 860px) {
     .container {
         grid-template-columns: repeat(2, 230px);
+    }
+    #txtBusca {
+        width: 200px;
+    }
+    .busca a {
+        width: 20%;
     }
 }

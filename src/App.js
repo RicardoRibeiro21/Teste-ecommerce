@@ -43,7 +43,12 @@ class SplashScreen extends Component {
         <h2 style={{ color: 'white', fontSize: '2.5em' }}>Carregando</h2>
         <Loading color="white" type="spin" />
       </div>
-    } else return this.props.history.push("/home")
+    } else return (
+        <div>
+          <p>Renderiza</p>
+          { this.props.history.push("/home")}
+        </div>
+    ) 
 
 
   }
