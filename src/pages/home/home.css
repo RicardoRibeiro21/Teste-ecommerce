@@ -13,6 +13,7 @@ input[type=text] {
 }
 
 .busca {
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,14 +21,16 @@ input[type=text] {
     height: 40px;
     margin-top: 2%;
 }
+
 .busca a {
-    margin-left: 15%;    
+    margin-left: 15%;
 }
+
 #txtBusca {
     border-radius: 14px;
     border: none;
-    border-bottom: 5px solid rgba(109, 95, 235, 0.5);
-    width: 400px;    
+    border-bottom: 5px solid rgba(235, 32, 73, 0.747);
+    width: 400px;
     outline: none;
     height: 1.5em;
 }
