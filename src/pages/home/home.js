@@ -135,7 +135,7 @@ class Ecommerce extends Component {
                 return result.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
             }
         );
-        if (this.state.showCar == false) {
+        if (this.state.showCar === false) {
             return (
                 <div>
                     <h2 className="titulo">A melhor loja de roupas e acessórios para você</h2>

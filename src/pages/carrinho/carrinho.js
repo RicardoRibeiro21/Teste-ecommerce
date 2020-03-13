@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import indisponivel from '../../assets/img/indisponivel.jpg';
 import '../carrinho/carrinho.css'
 
-let preco = 0;
 class Carrinho extends Component {
     constructor() {
         super();

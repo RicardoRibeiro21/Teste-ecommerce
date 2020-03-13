@@ -71,11 +71,23 @@
         width: 20%;
         height: 6%;
     }
+    .carrinho-itens {
+        font-size: 0.8em;
+    }
+    .qtd-carrinho {
+        font-size: 1.2em;
+    }
 }
 
 @media screen and (max-width: 860px) {
     .button {
         width: 25%;
+        font-size: 0.9em;
+    }
+    .carrinho-itens {
+        font-size: 0.6em;
+    }
+    .qtd-carrinho {
         font-size: 0.9em;
     }
 }
