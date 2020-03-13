@@ -2,6 +2,9 @@
 
 Intruções para baixar, executar e testar o projeto.
 
+Baixar e instalar NPM em: 
+	https://www.npmjs.com/get-npm
+
 Baixando o projeto:
 
 Utilizando o comando git clone no prompt de comando(cmd), copie a url e pressione enter. Exemplo:
